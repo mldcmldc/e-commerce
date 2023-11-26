@@ -1,4 +1,6 @@
 function StorePage() {
+  console.log("another test");
+
   return <div className="flex flex-col min-h-screen h-full w-full">
     <div className="flex-1">Navbar</div>
     <div className="flex-1">Store</div>
@@ -24,6 +26,6 @@ function StorePage() {
     </div>
     <div className="flex flex-1 mt-auto">Footer</div>
   </div>
-}
+} 
 
 export default StorePage;
