@@ -1,31 +1,28 @@
-function StorePage() {
-  console.log("another test");
+import ProductCard from "../components/molecule/product-card";
 
-  return <div className="flex flex-col min-h-screen h-full w-full">
-    <div className="flex-1">Navbar</div>
-    <div className="flex-1">Store</div>
-    <div className="flex w-full flex-1">
-      <div className="flex flex-col border border-black p-5">
-        <div className="flex flex-1">Store</div>
-        <div className="flex flex-1">Store</div>
-        <div className="flex flex-1">Store</div>
-        <div className="flex flex-1">Store</div>
-        <div className="flex flex-1">Store</div>
-      </div>
-      <div className="flex flex-wrap content-between flex-1">
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store1</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store2</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store3</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store4</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store5</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store6</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store7</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store8</div>
-        <div className="w-1/3 h-40 flex justify-center items-center border border-black">Store9</div>
+function StorePage() {
+  return <>
+    <div className="py-5">Store</div>
+    <div className="flex flex-col min-h-screen h-full w-full gap-y-5">
+      <input type="text" className="border border-black w-full p-5 h-full" placeholder="Search products" />
+      <div className="flex w-full flex-1 gap-x-5">
+        <div className="flex flex-col min-w-[150px] border border-black p-5">
+          <div className="mb-5">Filters</div>
+          <div>Store</div>
+          <div>Store</div>
+          <div>Store</div>
+          <div>Store</div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-5 content-between flex-1">
+          {
+            [...Array(10).keys()].map((_, idx) =>
+              <ProductCard key={idx} name={`Prod ${idx + 1}`} />
+            )
+          }
+        </div>
       </div>
     </div>
-    <div className="flex flex-1 mt-auto">Footer</div>
-  </div>
-} 
+  </>
+}
 
 export default StorePage;
