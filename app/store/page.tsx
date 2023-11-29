@@ -8,10 +8,10 @@ function StorePage() {
       <div className="flex w-full flex-1 gap-x-5">
         <div className="flex flex-col min-w-[150px] border border-black p-5">
           <div className="mb-5">Filters</div>
-          <div>Store</div>
-          <div>Store</div>
-          <div>Store</div>
-          <div>Store</div>
+          <div>Filter 1</div>
+          <div>Filter 2</div>
+          <div>Filter 3</div>
+          <div>Filter 4</div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-5 content-between flex-1">
           {

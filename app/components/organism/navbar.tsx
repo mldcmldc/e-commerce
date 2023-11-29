@@ -1,5 +1,5 @@
-"use client" 
-
+"use client"
+import Cart from "../molecule/cart";
 import Link from "next/link";
 
 function Navbar() {
@@ -12,7 +12,7 @@ function Navbar() {
     </p>
     <div className="flex justify-end items-center flex-1 space-x-5">
       <Link href="/store">Store</Link>
-      <button onClick={()=>console.log("hello")}>Cart</button>
+      <Cart />
     </div>
   </div>
 }
