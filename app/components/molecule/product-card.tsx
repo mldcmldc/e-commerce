@@ -1,11 +1,17 @@
 "use client"
 
+import { useCart } from "../../hooks/useCart"
+
 type ProductCardProps = {
   name: string
 }
 
 function ProductCard(props: ProductCardProps) {
   const { name } = props
+
+  const {
+    addCart: { mutate: addToCart }
+  } = useCart()
 
   return (
     <div className="flex flex-col py-2">
@@ -14,7 +20,9 @@ function ProductCard(props: ProductCardProps) {
       </div>
       <button
         className="border border-black px-4 py-2"
-        onClick={() => console.log("add")}
+        onClick={() =>
+          addToCart({ id: Math.ceil(Math.random() * 1000), quantity: 1 })
+        }
       >
         Add to Cart
       </button>

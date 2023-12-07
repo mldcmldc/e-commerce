@@ -1,19 +1,18 @@
-const {
-  useMutation,
-  useQueryClient,
-  useQuery
-} = require("@tanstack/react-query")
+"use client"
 
-function useCart() {
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query"
+import { CartService } from "../services/cart"
+
+export function useCart() {
   const queryClient = useQueryClient()
 
   const getCart = useQuery({
     queryKey: ["cart"],
-    queryFn: () => console.log("hello")
+    queryFn: CartService.getCart
   })
 
   const addCart = useMutation({
-    mutationFn: () => console.log("add cart"),
+    mutationFn: CartService.addCart,
     onSuccess: async () => {
       console.log("on success")
       queryClient.invalidateQueries("cart")
@@ -22,7 +21,7 @@ function useCart() {
   })
 
   const removeCart = useMutation({
-    mutationFn: () => console.log("remove cart"),
+    mutationFn: CartService.removeCart,
     onSuccess: async () => {
       console.log("on success")
       queryClient.invalidateQueries("cart")
@@ -31,7 +30,7 @@ function useCart() {
   })
 
   const editCart = useMutation({
-    mutationFn: () => console.log("edit cart"),
+    mutationFn: CartService.editCart,
     onSuccess: async () => {
       console.log("on success")
       queryClient.invalidateQueries("cart")
@@ -41,5 +40,3 @@ function useCart() {
 
   return { getCart, removeCart, addCart, editCart }
 }
-
-export default useCart
