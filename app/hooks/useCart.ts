@@ -3,10 +3,17 @@
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query"
 import { CartService } from "../services/cart"
 
+type CartItem = {
+  id: number
+  name: string
+  price: number
+  quantity: number
+}
+
 export function useCart() {
   const queryClient = useQueryClient()
 
-  const getCart = useQuery({
+  const getCart = useQuery<CartItem[]>({
     queryKey: ["cart"],
     queryFn: CartService.getCart
   })

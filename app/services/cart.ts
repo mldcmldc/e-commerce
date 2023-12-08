@@ -1,15 +1,17 @@
-type AddCartObj = {
+type CartItem = {
   id: number
+  name: string
+  price: number
   quantity: number
 }
 
-const cart = []
+const cart: CartItem[] = []
 
 export const CartService = {
   getCart: () => {
     return cart
   },
-  addCart: (obj: AddCartObj) => {
+  addCart: (obj: CartItem) => {
     // fetch by id
     cart.push(obj)
     console.log("added to cart")
