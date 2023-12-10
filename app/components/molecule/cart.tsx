@@ -23,7 +23,7 @@ function Cart() {
                   <div className="flex flex-col justify-center">
                     <p className="text-sm">{item.name}</p>
                     <p className="text-sm">Qty: {item.quantity}</p>
-                    <p className="text-sm">Price: {item.price}</p>
+                    <p className="text-sm">Price: ${item.price}</p>
                   </div>
                 </div>
               ))}
