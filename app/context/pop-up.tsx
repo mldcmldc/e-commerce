@@ -4,7 +4,8 @@ import { ReactNode, createContext, useState } from "react"
 
 type PopUpContextType = {
   isToastOpen: boolean
-  displayToast: () => void
+  displayToast: (message: string) => void
+  toastMessage: string
   isModalOpen: boolean
   displayModal: () => void
 }
@@ -13,14 +14,16 @@ export const PopUpContext = createContext<PopUpContextType | null>(null)
 
 function PopUpContextProvider({ children }: { children: ReactNode }) {
   const [isToastOpen, setIsToastOpen] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  function displayToast() {
+  function displayToast(message: string) {
     setIsToastOpen(true)
+    setToastMessage(message)
 
-    alert(isToastOpen)
     setTimeout(() => {
       setIsToastOpen(false)
+      setToastMessage("")
     }, 5000)
   }
 
@@ -34,7 +37,13 @@ function PopUpContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <PopUpContext.Provider
-      value={{ isToastOpen, displayToast, isModalOpen, displayModal }}
+      value={{
+        isToastOpen,
+        displayToast,
+        toastMessage,
+        isModalOpen,
+        displayModal
+      }}
     >
       {children}
     </PopUpContext.Provider>
