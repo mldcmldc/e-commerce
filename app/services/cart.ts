@@ -6,16 +6,13 @@ export const CartService = {
   getCart: () => {
     return cart
   },
-  addCart: (obj: CartItem) => {
+  addCart: (obj: Omit<CartItem, "quantity">) => {
     // fetch by id
     cart.push(obj)
-    console.log("added to cart")
-    console.log(cart)
   },
   removeCart: (id: number) => {
     // remove by id
     cart.filter(item => item.id == id)
-    console.log("removed from cart")
   },
   editCart: ({ id, quantity }: { id: number; quantity: number }) => {
     // edit cart item by id

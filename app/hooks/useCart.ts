@@ -21,7 +21,7 @@ export function useCart() {
   const addCart = useMutation({
     mutationFn: CartService.addCart,
     onSuccess: async () => {
-      console.log("on success")
+      console.log("on success add")
       queryClient.invalidateQueries("cart")
     },
     onError: () => console.log("add cart error")
@@ -30,7 +30,7 @@ export function useCart() {
   const removeCart = useMutation({
     mutationFn: CartService.removeCart,
     onSuccess: async () => {
-      console.log("on success")
+      console.log("on success remove")
       queryClient.invalidateQueries("cart")
     },
     onError: () => console.log("remove cart error")
@@ -39,7 +39,7 @@ export function useCart() {
   const editCart = useMutation({
     mutationFn: CartService.editCart,
     onSuccess: async () => {
-      console.log("on success")
+      console.log("on success edit")
       queryClient.invalidateQueries("cart")
     },
     onError: () => console.log("edit cart error")
