@@ -1,10 +1,9 @@
 "use client"
 
+import { IS_CONNECTED_TO_DB } from "@/app/config/connection"
 import { useCart } from "@/app/hooks/useCart"
 import { CartItem } from "@/app/types/cart"
 import { useState } from "react"
-
-const IS_CONNECTED_TO_DB = false
 
 function Cart() {
   const {
@@ -12,10 +11,10 @@ function Cart() {
   } = useCart()
   const [isOpen, setIsOpen] = useState(false)
 
-  let cartFromLocal =
+  const cartFromLocal =
     typeof window !== "undefined" ? localStorage.getItem("cartItems") : null
 
-  let _cartItems: CartItem[] = IS_CONNECTED_TO_DB
+  const _cartItems: CartItem[] = IS_CONNECTED_TO_DB
     ? cartItems
     : cartFromLocal
       ? JSON.parse(cartFromLocal)
@@ -45,6 +44,7 @@ function Cart() {
               </p>
             )}
           </div>
+
           {_cartItems.length > 0 && (
             <button className="text-center mt-auto py-2 border border-black">
               View My Cart
