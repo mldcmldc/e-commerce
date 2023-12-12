@@ -18,15 +18,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-        <PopUpContextProvider>
-      <body className={`${inter.className} relative min-h-screen h-full`}>
-        <Toast />
+      <PopUpContextProvider>
+        <body className={`${inter.className} relative min-h-screen h-full`}>
+          <Toast />
           <QueryProvider>
             <Navbar />
             <div className="px-5">{children}</div>
             <Footer />
           </QueryProvider>
-      </body>
+        </body>
       </PopUpContextProvider>
     </html>
   )

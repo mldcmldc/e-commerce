@@ -21,8 +21,8 @@ function StorePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-5 content-between flex-1">
             {[...Array(10).keys()].map((_, idx) => {
-              const price = randomNumber();
-              const id = randomNumber();
+              const price = randomNumber()
+              const id = randomNumber()
 
               return (
                 <ProductCard

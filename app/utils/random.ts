@@ -1,2 +1,1 @@
-export  const randomNumber = () => Math.ceil(Math.random() * 1000)
-
+export const randomNumber = () => Math.ceil(Math.random() * 1000)
