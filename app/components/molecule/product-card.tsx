@@ -64,8 +64,8 @@ function ProductCard(props: ProductCardProps) {
   }
 
   return (
-    <div className="flex flex-col py-2">
-      <div className="w-full h-40 flex justify-center items-center border border-black">
+    <div className="flex flex-col py-2 h-full min-h-[40]">
+      <div className="w-full h-full flex justify-center items-center border border-black">
         {name}
       </div>
       <button
