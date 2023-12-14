@@ -1,28 +1,25 @@
 "use client"
 
-import { useParams, usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import ProductCard from "../components/molecule/product-card"
 import { randomNumber } from "../utils/random"
 
-function StorePage({ searchParams }) {
-  const params = useParams()
+function Page({ searchParams }) {
   const pathname = usePathname()
-
-  console.log(params)
+  const router = useRouter()
 
   function addQueryParam({ key, value }: { key: string; value: string }) {
-    const url = new URL(`${pathname}?${searchParams}`)
-    const urlSearchParams = new URLSearchParams(`${pathname}?${searchParams}`)
+    const urlSearchParams = new URLSearchParams(searchParams)
 
-    urlSearchParams.append(key, value)
+    if (!urlSearchParams.has(key)) {
+      urlSearchParams.append(key, value)
+    }
 
-    console.log(url)
-    console.log(urlSearchParams)
-    console.log("hehe")
+    router.push(`${pathname}?${urlSearchParams}`)
   }
 
   return (
-    <>
+    <div>
       <div className="py-5">Store</div>
       <div className="flex flex-col min-h-screen h-full w-full gap-y-5">
         <input
@@ -34,13 +31,29 @@ function StorePage({ searchParams }) {
           <div className="flex flex-col min-w-[150px] border border-black p-5">
             <div className="mb-5">Filters</div>
             <button
+              className="text-left"
               onClick={() => addQueryParam({ key: "category", value: "test" })}
             >
               Category 1
             </button>
-            <button>Category 2</button>
-            <button>Category 3</button>
-            <button>Category 4</button>
+            <button
+              className="text-left"
+              onClick={() => addQueryParam({ key: "category2", value: "test" })}
+            >
+              Category 2
+            </button>
+            <button
+              className="text-left"
+              onClick={() => addQueryParam({ key: "category3", value: "test" })}
+            >
+              Category 3
+            </button>
+            <button
+              className="text-left"
+              onClick={() => addQueryParam({ key: "category4", value: "test" })}
+            >
+              Category 4
+            </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-x-5 flex-1">
             {[...Array(10).keys()].map((_, idx) => {
@@ -59,8 +72,8 @@ function StorePage({ searchParams }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
-export default StorePage
+export default Page

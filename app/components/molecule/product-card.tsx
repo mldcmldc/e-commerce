@@ -7,6 +7,7 @@ import { TOAST_MESSAGE } from "@/app/constants/toast-message"
 import { IS_CONNECTED_TO_DB } from "@/app/config/connection"
 import { LocalCartService } from "@/app/services/cart-local"
 import { CartItem } from "@/app/types/cart"
+import { debounce } from "@/app/utils/debounce"
 
 type ProductCardProps = {
   id: number
@@ -30,7 +31,7 @@ function ProductCard(props: ProductCardProps) {
     getCart
   } = LocalCartService
 
-  function _addToCart(cartItem: CartItem) {
+  const _addToCart = debounce((cartItem: CartItem) => {
     try {
       if (IS_CONNECTED_TO_DB) {
         const item = cartItems?.find(itemFromDb => itemFromDb.id == cartItem.id)
@@ -61,7 +62,7 @@ function ProductCard(props: ProductCardProps) {
     } catch (error) {
       popUpContext?.displayToast(TOAST_MESSAGE.ERROR_CART)
     }
-  }
+  })
 
   return (
     <div className="flex flex-col py-2 h-full min-h-[40]">

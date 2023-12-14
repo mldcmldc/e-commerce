@@ -22,17 +22,21 @@ function Cart() {
 
   return (
     <div className="relative">
-      <button
-        className="flex items-center"
-        onClick={() => setIsOpen(prevState => !prevState)}
-      >
-        Cart{" "}
-        {_cartItems.length > 0 && (
-          <span className="ml-1 text-xs border border-black rounded-full p-1">
-            {_cartItems.length}
-          </span>
-        )}
-      </button>
+      <div className="flex">
+        <button
+          className="flex items-center"
+          onClick={() => setIsOpen(prevState => !prevState)}
+        >
+          Cart
+        </button>
+        <div>
+          {_cartItems.length > 0 ? (
+            <div className="ml-1 text-xs border border-black rounded-full p-1">
+              <p>{_cartItems.length}</p>
+            </div>
+          ) : null}
+        </div>
+      </div>
 
       {isOpen ? (
         <div className="absolute -right-2 z-50 flex flex-col bg-white mt-4 w-64 h-96 p-5 border border-black">
