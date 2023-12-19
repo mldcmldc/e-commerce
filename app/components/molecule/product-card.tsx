@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { useCart } from "../../hooks/useCart"
 import { PopUpContext } from "@/app/context/pop-up"
 import { TOAST_MESSAGE } from "@/app/constants/toast-message"
@@ -31,38 +31,43 @@ function ProductCard(props: ProductCardProps) {
     getCart
   } = LocalCartService
 
-  const _addToCart = debounce((cartItem: CartItem) => {
-    try {
-      if (IS_CONNECTED_TO_DB) {
-        const item = cartItems?.find(itemFromDb => itemFromDb.id == cartItem.id)
+  const _addToCart = useCallback(
+    debounce((cartItem: CartItem) => {
+      try {
+        if (IS_CONNECTED_TO_DB) {
+          const item = cartItems?.find(
+            itemFromDb => itemFromDb.id == cartItem.id
+          )
+
+          if (item) {
+            editCart({ id: item.id, quantity: 1 })
+            popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_UPDATE)
+            return
+          }
+
+          addToCart(cartItem)
+          popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_CART)
+          return
+        }
+
+        const item = getCart().find(
+          cartItemFromLocal => cartItemFromLocal.id == cartItem.id
+        )
 
         if (item) {
-          editCart({ id: item.id, quantity: 1 })
+          editLocalCart({ id: item.id })
           popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_UPDATE)
           return
         }
 
-        addToCart(cartItem)
+        addToLocalCart(cartItem)
         popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_CART)
-        return
+      } catch (error) {
+        popUpContext?.displayToast(TOAST_MESSAGE.ERROR_CART)
       }
-
-      const item = getCart().find(
-        cartItemFromLocal => cartItemFromLocal.id == cartItem.id
-      )
-
-      if (item) {
-        editLocalCart({ id: item.id })
-        popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_UPDATE)
-        return
-      }
-
-      addToLocalCart(cartItem)
-      popUpContext?.displayToast(TOAST_MESSAGE.SUCCESS_CART)
-    } catch (error) {
-      popUpContext?.displayToast(TOAST_MESSAGE.ERROR_CART)
-    }
-  })
+    }),
+    [cartItems, addToCart, editCart]
+  )
 
   return (
     <div className="flex flex-col py-2 h-full min-h-[40]">
