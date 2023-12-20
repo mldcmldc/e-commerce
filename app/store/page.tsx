@@ -3,10 +3,13 @@
 import { usePathname, useRouter } from "next/navigation"
 import ProductCard from "../components/molecule/product-card"
 import { randomNumber } from "../utils/random"
+import { useState } from "react"
+import { products } from "../definitions/products"
 
 function Page({ searchParams }) {
   const pathname = usePathname()
   const router = useRouter()
+  const [searchValue, setSearchValue] = useState("")
 
   function addQueryParam({ key, value }: { key: string; value: string }) {
     const urlSearchParams = new URLSearchParams(searchParams)
@@ -18,6 +21,17 @@ function Page({ searchParams }) {
     router.push(`${pathname}?${urlSearchParams}`)
   }
 
+  function onSearch(e) {
+    setSearchValue(e.target.value.trim())
+  }
+
+  const filteredProducts =
+    searchValue !== ""
+      ? products.filter(product =>
+          product.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      : products
+
   return (
     <div>
       <div className="py-5">Store</div>
@@ -26,6 +40,7 @@ function Page({ searchParams }) {
           type="text"
           className="border border-black w-full p-5 h-full"
           placeholder="Search products"
+          onChange={onSearch}
         />
         <div className="flex w-full flex-1 gap-x-5">
           <div className="flex flex-col min-w-[150px] border border-black p-5">
@@ -56,19 +71,9 @@ function Page({ searchParams }) {
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-x-5 flex-1">
-            {[...Array(10).keys()].map((_, idx) => {
-              const price = randomNumber()
-              const id = randomNumber()
-
-              return (
-                <ProductCard
-                  key={idx}
-                  price={price}
-                  id={id}
-                  name={`Prod ${idx + 1}`}
-                />
-              )
-            })}
+            {filteredProducts.map((product, idx) => (
+              <ProductCard key={idx} {...product} />
+            ))}
           </div>
         </div>
       </div>
