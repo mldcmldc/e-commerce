@@ -2,14 +2,15 @@
 
 import { usePathname, useRouter } from "next/navigation"
 import ProductCard from "../components/molecule/product-card"
-import { randomNumber } from "../utils/random"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { products } from "../definitions/products"
 
 function Page({ searchParams }) {
   const pathname = usePathname()
   const router = useRouter()
   const [searchValue, setSearchValue] = useState("")
+  const [filteredProducts, setFilteredProducts] = useState(products)
+  const [isPending, startTransition] = useTransition()
 
   function addQueryParam({ key, value }: { key: string; value: string }) {
     const urlSearchParams = new URLSearchParams(searchParams)
@@ -22,18 +23,23 @@ function Page({ searchParams }) {
   }
 
   function onSearch(e) {
-    setSearchValue(e.target.value.trim())
+    const searchInput = e.target.value.trim()
+    setSearchValue(searchInput)
+
+    const filteredProducts =
+      searchInput != ""
+        ? products.filter(product =>
+            product.name.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        : products
+
+    startTransition(() => {
+      setFilteredProducts(filteredProducts)
+    })
   }
 
-  const filteredProducts =
-    searchValue !== ""
-      ? products.filter(product =>
-          product.name.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      : products
-
   return (
-    <div>
+    <>
       <div className="py-5">Store</div>
       <div className="flex flex-col min-h-screen h-full w-full gap-y-5">
         <input
@@ -70,14 +76,22 @@ function Page({ searchParams }) {
               Category 4
             </button>
           </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-x-5 flex-1">
             {filteredProducts.map((product, idx) => (
-              <ProductCard key={idx} {...product} />
+              <div
+                key={idx}
+                className={`duration-300 transition-opacity ease-in ${
+                  isPending ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                <ProductCard {...product} />
+              </div>
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
