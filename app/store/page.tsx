@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import ProductCard from "../components/molecule/product-card"
 import { useState, useTransition } from "react"
-import { products } from "../definitions/products"
+import { productFilters, products } from "../definitions/products"
 
 function Page({ searchParams }) {
   const pathname = usePathname()
@@ -16,6 +16,9 @@ function Page({ searchParams }) {
     const urlSearchParams = new URLSearchParams(searchParams)
 
     if (!urlSearchParams.has(key)) {
+      urlSearchParams.append(key, value)
+    } else if(urlSearchParams.get(key) != value){
+      urlSearchParams.delete(key)
       urlSearchParams.append(key, value)
     }
 
@@ -51,30 +54,17 @@ function Page({ searchParams }) {
         <div className="flex w-full flex-1 gap-x-5">
           <div className="flex flex-col min-w-[150px] border border-black p-5">
             <div className="mb-5">Filters</div>
-            <button
-              className="text-left"
-              onClick={() => addQueryParam({ key: "category", value: "test" })}
-            >
-              Category 1
-            </button>
-            <button
-              className="text-left"
-              onClick={() => addQueryParam({ key: "category2", value: "test" })}
-            >
-              Category 2
-            </button>
-            <button
-              className="text-left"
-              onClick={() => addQueryParam({ key: "category3", value: "test" })}
-            >
-              Category 3
-            </button>
-            <button
-              className="text-left"
-              onClick={() => addQueryParam({ key: "category4", value: "test" })}
-            >
-              Category 4
-            </button>
+            {productFilters.map(filter => (
+              <button
+                className="text-left"
+                key={filter.id}
+                onClick={() =>
+                  addQueryParam({ key: "category", value: filter.category })
+                }
+              >
+                {filter.name}
+              </button>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-x-5 flex-1">
