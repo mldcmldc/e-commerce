@@ -17,12 +17,18 @@ function Page({ searchParams }) {
 
     if (!urlSearchParams.has(key)) {
       urlSearchParams.append(key, value)
-    } else if(urlSearchParams.get(key) != value){
+    } else if (urlSearchParams.get(key) != value) {
       urlSearchParams.delete(key)
       urlSearchParams.append(key, value)
     }
 
     router.push(`${pathname}?${urlSearchParams}`)
+
+    const filteredProducts = products.filter(
+      product => product.category == value
+    )
+
+    setFilteredProducts(filteredProducts)
   }
 
   function onSearch(e) {
